@@ -24,11 +24,11 @@ class SignInViewModel @Inject constructor(
 
     init {
         loginMediator.addSource(username) {
-            loginMediator.value = password.value?.isNotBlank() == true && it?.isNotBlank() ?: false
+            loginMediator.value = password.value?.isNotBlank() == true && it?.isValidUsername() ?: false
         }
 
         loginMediator.addSource(password) {
-            loginMediator.value = username.value?.isNotBlank() == true && it?.isNotBlank() ?: false
+            loginMediator.value = username.value?.isNotBlank() == true && it?.isValidPassword() ?: false
         }
 
     }
