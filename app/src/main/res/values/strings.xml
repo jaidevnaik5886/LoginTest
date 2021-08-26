@@ -7,4 +7,6 @@
     <string name="loading">Loading</string>
     <string name="hello">Hello</string>
     <string name="home">Home</string>
+    <string name="enter_valid_username">Enter Proper Username</string>
+    <string name="enter_valid_password">Password not meeting the criteria</string>
 </resources>

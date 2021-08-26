@@ -2,13 +2,19 @@ package com.jaidev.srijan.ui.signin
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.jaidev.srijan.R
 import com.jaidev.srijan.base.BaseViewModel
+import com.jaidev.srijan.common.ResourceHelper
+import com.jaidev.srijan.extensions.isValidPassword
+import com.jaidev.srijan.extensions.isValidUsername
 import com.jaidev.srijan.utils.BaseEvent
+import com.jaidev.srijan.utils.ToastEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
+    val resourceHelper: ResourceHelper
 ) : BaseViewModel() {
 
     val username: MutableLiveData<String> = MutableLiveData<String>("")
@@ -24,11 +30,28 @@ class SignInViewModel @Inject constructor(
         loginMediator.addSource(password) {
             loginMediator.value = username.value?.isNotBlank() == true && it?.isNotBlank() ?: false
         }
+
     }
 
     fun onLoginClicked() {
-        if (username.value!!.trim().isNotEmpty() && password.value!!.trim().isNotEmpty()) {
+        if (isCredentialsValid()) {
             performLogin()
+        }
+    }
+
+    private fun isCredentialsValid(): Boolean {
+        return when {
+            !username.value?.trim().isValidUsername() -> {
+                sendEvent(ToastEvent(resourceHelper.getString(R.string.enter_valid_username)))
+                false
+            }
+            !password.value!!.trim().isValidPassword() -> {
+                sendEvent(ToastEvent(resourceHelper.getString(R.string.enter_valid_password)))
+                false
+            }
+            else -> {
+                true
+            }
         }
     }
 
@@ -40,6 +63,8 @@ class SignInViewModel @Inject constructor(
     }
 
 }
+
+
 
 
 class NavToHomePage() : BaseEvent()
