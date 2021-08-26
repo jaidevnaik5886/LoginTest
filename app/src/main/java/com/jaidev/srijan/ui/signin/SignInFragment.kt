@@ -39,7 +39,7 @@ class SignInFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_logi
         super.handleEvent(event)
         when (event) {
             is NavToHomePage -> {
-                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToHomeFragment())
+                findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToHomeFragment(event.username))
             }
         }
     }

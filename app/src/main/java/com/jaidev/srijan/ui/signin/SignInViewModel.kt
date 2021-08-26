@@ -58,7 +58,7 @@ class SignInViewModel @Inject constructor(
     private fun performLogin() {
         launch {
             token = "loggedIn"
-            sendEvent(NavToHomePage())
+            sendEvent(NavToHomePage(username.value.toString()))
         }
     }
 
@@ -67,4 +67,4 @@ class SignInViewModel @Inject constructor(
 
 
 
-class NavToHomePage() : BaseEvent()
+class NavToHomePage(val username : String) : BaseEvent()
